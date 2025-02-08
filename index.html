@@ -4,22 +4,23 @@
   <meta charset="UTF-8">
   <title>Valentine for Buggu</title>
   <style>
-    /* Basic styling */
     body {
       background-color: white;
       color: #F9B8F9;
       font-family: sans-serif;
       text-align: center;
       overflow: hidden;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
-    h1 {
-      font-size: 3em;
-      margin-top: 50px;
+    h1, h2 {
+      margin: 20px 0;
     }
 
-    /* Buttons */
     .btn {
       font-size: 1.5em;
       padding: 15px 30px;
@@ -28,20 +29,19 @@
       cursor: pointer;
       border-radius: 10px;
       transition: 0.3s;
+      display: inline-block;
+      position: relative;
     }
 
     #yes-btn {
       background-color: #F9B8F9;
       color: white;
-      font-size: 1.5em;
     }
 
     #no-btn {
       background-color: white;
       color: #F9B8F9;
-      font-size: 1.5em;
       border: 2px solid #F9B8F9;
-      position: absolute;
     }
 
     #yes-btn:hover, #no-btn:hover {
@@ -50,14 +50,28 @@
 
     /* Heart animation */
     .heart {
-      position: absolute;
+      position: fixed;
       font-size: 2em;
       animation: fall 3s linear infinite;
+      z-index: 100;
     }
 
     @keyframes fall {
       from { transform: translateY(-10vh); opacity: 1; }
       to { transform: translateY(100vh); opacity: 0; }
+    }
+
+    /* Heart burst animation */
+    .burst {
+      position: fixed;
+      font-size: 2em;
+      animation: burst 0.8s ease-out forwards;
+      z-index: 100;
+    }
+
+    @keyframes burst {
+      from { transform: scale(0); opacity: 1; }
+      to { transform: scale(3); opacity: 0; }
     }
   </style>
 </head>
@@ -66,8 +80,10 @@
   <h1>BUGGGGGUUUU HIEEEEEEEEEEEEEE</h1>
   <h2>Will you be my valentine, Lovu Soni Buggiye?</h2>
 
-  <button id="yes-btn" class="btn">YES</button>
-  <button id="no-btn" class="btn" style="left: 50%; top: 60%;">NO</button>
+  <div>
+    <button id="yes-btn" class="btn">YES</button>
+    <button id="no-btn" class="btn">NO</button>
+  </div>
 
   <script>
     const yesBtn = document.getElementById("yes-btn");
@@ -78,12 +94,15 @@
       "Say yes",
       "Pleaseee maam",
       "Manja na pagal g",
-      "BUGGGGGUUU I THOUGHT YOU LOVED ME:("
+      "BUGGGGGUUU I THOUGHT YOU LOVED ME"
     ];
 
     yesBtn.addEventListener("click", () => {
       for (let i = 0; i < 50; i++) {
         createHeart();
+      }
+      for (let i = 0; i < 20; i++) {
+        createBurst();
       }
     });
 
@@ -101,6 +120,7 @@
     function moveNoButton() {
       const x = Math.random() * (window.innerWidth - noBtn.clientWidth);
       const y = Math.random() * (window.innerHeight - noBtn.clientHeight);
+      noBtn.style.position = 'absolute';
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
     }
@@ -113,6 +133,16 @@
       heart.style.animationDuration = `${Math.random() * 2 + 1}s`;
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 3000);
+    }
+
+    function createBurst() {
+      const burst = document.createElement("div");
+      burst.classList.add("burst");
+      burst.innerHTML = "💖";
+      burst.style.left = `${50 + Math.random() * 50}vw`;
+      burst.style.top = `${50 + Math.random() * 50}vh`;
+      document.body.appendChild(burst);
+      setTimeout(() => burst.remove(), 800);
     }
   </script>
 
